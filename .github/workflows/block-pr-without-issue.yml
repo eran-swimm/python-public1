@@ -17,7 +17,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-            console.log(`PR Body: ${pr.data.body}`);
+            console.log(`PR Body: ${pr.data}`);
             const body = pr.data.body || '';
             const linkedIssuePattern = /#\d+/g;
             if (!linkedIssuePattern.test(body)) {
