@@ -1,0 +1,24 @@
+name: Block PRs Without Linked Issue
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  require-linked-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for linked issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+            const body = pr.data.body || '';
+            const linkedIssuePattern = /#\d+/g;
+            if (!linkedIssuePattern.test(body)) {
+              core.setFailed('This pull request must be linked to an issue (e.g., "Fixes #123").');
+            }
