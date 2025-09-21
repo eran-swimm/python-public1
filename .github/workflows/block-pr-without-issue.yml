@@ -22,3 +22,4 @@ jobs:
             if (!linkedIssuePattern.test(body)) {
               core.setFailed('This pull request must be linked to an issue (e.g., "Fixes #123").');
             }
+            console.log(JSON.stringify(pr.data, null, 2));
