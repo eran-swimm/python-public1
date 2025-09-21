@@ -12,6 +12,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            console.log(JSON.stringify(pr.data, null, 2));  
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -22,4 +23,3 @@ jobs:
             if (!linkedIssuePattern.test(body)) {
               core.setFailed('This pull request must be linked to an issue (e.g., "Fixes #123").');
             }
-            console.log(JSON.stringify(pr.data, null, 2));
